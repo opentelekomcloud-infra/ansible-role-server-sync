@@ -1,6 +1,5 @@
 ---
 # tasks file for opentelekomcloud_infra.sync_servers
-
 - name: Establish ssh trust
   authorized_key:
     user: "{{ ansible_user }}"

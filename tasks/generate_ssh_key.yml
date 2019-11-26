@@ -1,6 +1,5 @@
 ---
-# tasks file for opentelekomcloud_infra.sync_servers
-
+# tasks file for opentelekomcloud_infra.server_sync
 - name: Generate ssh key
   openssh_keypair:
     path: "~/.ssh/id_rsa"
@@ -10,5 +9,3 @@
 - name: Save public key
   set_fact:
     ssh_key: "{{ ssh_key.public_key }}"
-
-
