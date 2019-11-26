@@ -1,0 +1,12 @@
+[sync_group]
+{% for server in groups[sync_group_name] %}
+{% if hostvars[server].ansible_host != ansible_host %}
+{{ hostvars[server].ansible_host }} ansible_user={{ hostvars[server].ansible_user }}
+{% endif %}
+{% endfor %}
+
+[sync_group:vars]
+sync_folders = {{ sync_folders }}
+{% if post_sync_hook %}
+post_sync_hook = "{{ post_sync_hook }}"
+{% endif %}

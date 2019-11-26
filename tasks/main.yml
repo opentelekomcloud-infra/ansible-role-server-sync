@@ -1,0 +1,38 @@
+---
+# tasks file for opentelekomcloud_infra.sync_servers
+
+- name: Establish ssh trust
+  authorized_key:
+    user: "{{ ansible_user }}"
+    key: "{{ item }}"
+  loop: "{{ groups[sync_group_name] | map('extract', hostvars, 'ssh_key') | list }}"
+
+- name: Make config directories
+  become: true
+  file:
+    state: directory
+    path: "/etc/server_sync"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+ 
+- name: Generate sync scripts
+  become: true
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+  loop:
+    - {src: "inventory.j2", dest: "/etc/server_sync/inventory"}
+    - {src: "sync.yml.j2", dest: "/etc/server_sync/sync.yml"}
+    - {src: "server_sync.service.j2", dest: "/etc/systemd/system/server_sync.service"}
+    - {src: "server_sync.timer.j2", dest: "/etc/systemd/system/server_sync.timer"}
+
+- name: Enable systemd units
+  systemd:
+    name: "{{ item }}"
+    state: "started"
+    enabled: "true"
+  loop:
+    - "server_sync.timer"
+  when: server_sync_master is defined and server_sync_master

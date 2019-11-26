@@ -1,0 +1,16 @@
+---
+- name: Sync data
+  hosts: sync_group
+  become: true
+  tasks:
+    - name: Rsync
+      synchronize:
+        src: "{% raw %}{{ item }}{% endraw %}"
+        dest: "{% raw %}{{ item }}{% endraw %}"
+        delete: yes
+      loop: "{% raw %}{{ sync_folders }}{% endraw %}"
+
+{% if post_sync_hook %}
+    - name: Trigger post hook
+      command: "{{ post_sync_hook }}"
+{% endif %}

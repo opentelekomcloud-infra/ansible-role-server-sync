@@ -1,0 +1,18 @@
+galaxy_info:
+  author: Artem Goncharov
+  description: Enable synchronization between servers (i.e. HA configs)
+  company: OpenTelekomCloud
+  role_name: server_sync
+
+  license: Apache-2.0
+
+  min_ansible_version: 2.5
+
+  platforms:
+   - name: Fedora
+     versions:
+     - all
+
+  galaxy_tags: [opentelekomcloud]
+
+dependencies: []
