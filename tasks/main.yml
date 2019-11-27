@@ -19,8 +19,8 @@
   template:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
-    owner: "{{ ansible_user }}"
-    group: "{{ ansible_user }}"
+    owner: "root"
+    group: "root"
   loop:
     - {src: "inventory.j2", dest: "/etc/server_sync/inventory"}
     - {src: "sync.yml.j2", dest: "/etc/server_sync/sync.yml"}

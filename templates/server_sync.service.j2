@@ -3,5 +3,4 @@ Description=This service automatically synchronizes configured folders to other 
 
 [Service]
 Type=oneshot
-User={{ ansible_user }}
 ExecStart=/usr/bin/ansible-playbook -i /etc/server_sync/inventory /etc/server_sync/sync.yml

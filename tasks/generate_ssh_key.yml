@@ -1,6 +1,7 @@
 ---
 # tasks file for opentelekomcloud_infra.server_sync
 - name: Generate ssh key
+  become: true
   openssh_keypair:
     path: "~/.ssh/id_rsa"
   register:
